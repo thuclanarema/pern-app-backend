@@ -1,10 +1,10 @@
 const ResponseHandler = require('../helpers/responseHandler')
 
 const create = async (req, res, next) => {
-  const { first_name, last_name, email, password } = req.body
+  const { firstName, lastName, email, password } = req.body
 
   // validate
-  let paramObj = { first_name, last_name, email, password }
+  let paramObj = { firstName, lastName, email, password }
   let paramKeys = Object.keys(paramObj)
   for (let i = 0, leng = paramKeys.length; i < leng; i++) {
     if (!paramObj[paramKeys[i]]) {

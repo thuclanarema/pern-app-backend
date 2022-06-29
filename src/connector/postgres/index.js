@@ -1,40 +1,21 @@
 require('dotenv').config()
 
-const pg = require('pg')
-const { Client } = pg
+const { Sequelize } = require('sequelize')
 
-const postgresQuery = async (sql) => {
-  const client = new Client({
-    user: process.env.POSTGRES_USER,
-    host: process.env.POSTGRES_HOST,
-    database: process.env.POSTGRES_DB,
-    password: process.env.POSTGRES_PWD,
-    port: process.env.POSTGRES_PORT,
-  })
-  client.connect()
+const { POSTGRES_USER, POSTGRES_PWD, POSTGRES_HOST, POSTGRES_PORT, POSTGRES_DB } = process.env
 
-  try {
-    return await client.query(sql)
-  } catch (error) {
-    throw error
-  } finally {
-    client.end()
-  }
-}
+const postgresSequelize = new Sequelize(
+  `postgres://${POSTGRES_USER}:${POSTGRES_PWD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}`,
+)
 
-/**
- * Test
- */
 const __test__ = async () => {
   try {
-    let res = await postgresQuery(
-      `select * from information_schema.tables where table_schema = 'public';`,
-    )
-    console.log('__test__ postgresQuery tables :>> ', res.rows)
+    await postgresSequelize.authenticate()
+    console.log('Connection has been established successfully.')
   } catch (error) {
-    console.log('__test__ postgresQuery error :>> ', error.message)
+    console.error('Unable to connect to the database:', error)
   }
 }
-// __test__()
+__test__()
 
-module.exports = postgresQuery
+module.exports = postgresSequelize

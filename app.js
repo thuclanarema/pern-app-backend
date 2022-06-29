@@ -10,11 +10,6 @@ const cors = require('cors')
 var indexRouter = require('./src/routes/index')
 var usersRouter = require('./src/routes/user')
 
-var UserRepository = require('./src/repositories/user')
-
-// Init database
-UserRepository.init()
-
 var app = express()
 
 // view engine setup
