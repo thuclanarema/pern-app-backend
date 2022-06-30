@@ -4,13 +4,13 @@ const { Sequelize } = require('sequelize')
 
 const { POSTGRES_USER, POSTGRES_PWD, POSTGRES_HOST, POSTGRES_PORT, POSTGRES_DB } = process.env
 
-const postgresSequelize = new Sequelize(
+const PostgresSequelize = new Sequelize(
   `postgres://${POSTGRES_USER}:${POSTGRES_PWD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}`,
 )
 
 const __test__ = async () => {
   try {
-    await postgresSequelize.authenticate()
+    await PostgresSequelize.authenticate()
     console.log('Connection has been established successfully.')
   } catch (error) {
     console.error('Unable to connect to the database:', error)
@@ -18,4 +18,4 @@ const __test__ = async () => {
 }
 __test__()
 
-module.exports = postgresSequelize
+module.exports = PostgresSequelize

@@ -25,10 +25,15 @@ const create = async (req) => {
   try {
     let data = { ...req.body }
 
+    // avatar if any
+    if (req.file) {
+      data.avatar = req.file
+    }
+
     // generate username
-    data.username = data.username
-      ? data.username
-      : generateSlug(data.first_name + '-' + data.last_name)
+    if (!data.username) {
+      data.username = generateSlug(data.firstName + '-' + data.lastName)
+    }
 
     return await Model.create(data)
   } catch (error) {
@@ -40,6 +45,11 @@ const update = async (req) => {
   try {
     const { id } = req.params
     const data = { ...req.body }
+
+    // avatar if any
+    if (req.file) {
+      data.avatar = req.file
+    }
 
     return await Model.update({ id, data })
   } catch (error) {

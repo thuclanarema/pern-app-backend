@@ -1,11 +1,11 @@
 const { Sequelize, DataTypes } = require('sequelize')
-const postgresSequelize = require('../connector/postgres/index')
+const PostgresSequelize = require('../connector/postgres/index')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 
 const { JWT_SECRET, JWT_EXPIRATION } = process.env
 
-const User = postgresSequelize.define('User', {
+const User = PostgresSequelize.define('users', {
   id: {
     type: DataTypes.INTEGER,
     allowNull: false,
@@ -45,6 +45,9 @@ const User = postgresSequelize.define('User', {
     type: DataTypes.STRING,
     defaultValue: 'GUEST',
   },
+  avatar: {
+    type: DataTypes.JSON,
+  },
 })
 
 User.prototype.toJSON = function () {
@@ -55,7 +58,6 @@ User.prototype.toJSON = function () {
   return values
 }
 
-// User.sync({ alter: true })
 User.sync()
 
 const find = async (filter) => {

@@ -6,6 +6,3 @@ coverage
 .cache
 .next
 public
-
-# Ignore all HTML files:
-*.html
