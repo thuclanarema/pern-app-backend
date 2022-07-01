@@ -5,50 +5,54 @@ const jwt = require('jsonwebtoken')
 
 const { JWT_SECRET, JWT_EXPIRATION } = process.env
 
-const User = PostgresSequelize.define('users', {
-  id: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    autoIncrement: true,
-    primaryKey: true,
+const User = PostgresSequelize.define(
+  'users',
+  {
+    id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      autoIncrement: true,
+      primaryKey: true,
+    },
+    firstname: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    lastname: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: 'compositeIndex',
+    },
+    username: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: 'compositeIndex',
+    },
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    genre: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
+    birthday: {
+      type: DataTypes.DATEONLY,
+    },
+    role: {
+      type: DataTypes.STRING,
+      defaultValue: 'GUEST',
+    },
+    avatar: {
+      type: DataTypes.JSON,
+    },
   },
-  firstName: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  lastName: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  email: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    unique: 'compositeIndex',
-  },
-  username: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    unique: 'compositeIndex',
-  },
-  password: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  genre: {
-    type: DataTypes.BOOLEAN,
-    defaultValue: false,
-  },
-  birthday: {
-    type: DataTypes.DATEONLY,
-  },
-  role: {
-    type: DataTypes.STRING,
-    defaultValue: 'GUEST',
-  },
-  avatar: {
-    type: DataTypes.JSON,
-  },
-})
+  { timestamps: false },
+)
 
 User.prototype.toJSON = function () {
   var values = Object.assign({}, this.get())
@@ -118,7 +122,7 @@ const _delete = async (id) => {
   }
 }
 
-const login = async ({ username, password }) => {
+const login = async ({ data, username, password }) => {
   try {
     let user = null
     if (!user) {
@@ -127,9 +131,12 @@ const login = async ({ username, password }) => {
     if (!user) {
       user = await User.findOne({ where: { email: username } })
     }
+
     if (!user) {
       throw new Error('Username or Password incorrect')
     }
+
+    console.log('user', user)
 
     const passwordCompare = await bcrypt.compareSync(password, user.password)
     if (!passwordCompare) {
