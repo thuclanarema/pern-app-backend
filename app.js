@@ -41,7 +41,6 @@ app.use('/', indexRouter)
 app.use('/api/users', usersRouter)
 app.use('/api/products', productRouter)
 app.use('/api/upload', uploadRouter)
-console.log(usersRouter)
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404))

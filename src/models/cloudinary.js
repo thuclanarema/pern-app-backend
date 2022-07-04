@@ -11,14 +11,13 @@ var self = (module.exports = {
     return new Promise((resolve) => {
       cloudinary.uploader
         .upload(file, {
-          folder: 'uploads',
+          // folder: 'uploads',
         })
         .then((result) => {
           if (result) {
-            const fs = require('fs')
-            fs.unlinkSync(file)
+            console.log('result', result)
             resolve({
-              url: result.secure_url,
+              url: result.url,
             })
           }
         })
@@ -28,19 +27,18 @@ var self = (module.exports = {
     return new Promise((resolve) => {
       cloudinary.uploader
         .upload(file, {
-          folder: 'uploads',
+          // folder: 'uploads',
         })
         .then((result) => {
           if (result) {
-            const fs = require('fs')
-            fs.unlinkSync(file)
             resolve({
-              url: result.secure_url,
+              url: result.url,
               id: result.public_id,
               thumb1: self.reSizeImage(result.public_id, 200, 200),
               main: self.reSizeImage(result.public_id, 500, 500),
               thumb2: self.reSizeImage(result.public_id, 300, 300),
             })
+            // console.log('result', result)
           }
         })
     })

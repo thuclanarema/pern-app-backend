@@ -14,5 +14,3 @@ router.put('/:id', MulterUpload.single('avatar'), Controller.update)
 router.delete('/:id', Controller.delete)
 
 module.exports = router
-
-console.log('Controller.find', Controller.find)

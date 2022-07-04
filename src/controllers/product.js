@@ -1,12 +1,6 @@
 const ResponseHandler = require('../helpers/responseHandler')
 const Service = require('./../services/product')
 
-console.log('Product', Service.find)
-// console.log('Service', Service.create)
-// console.log('Service', Service.findById)
-// console.log('Service', Service.update(1))
-// console.log('Service', Service.delete)
-
 const find = async (req, res) => {
   try {
     const data = await Service.find(req)

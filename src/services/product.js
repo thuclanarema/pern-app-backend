@@ -23,6 +23,11 @@ const create = async (req) => {
   try {
     let data = { ...req.body }
 
+    // avatar if any
+    if (req.file) {
+      data.image = req.file
+    }
+
     return await Model.create(data)
   } catch (error) {
     throw error
@@ -33,7 +38,11 @@ const update = async (req) => {
   try {
     const { id } = req.params
     const data = { ...req.body }
-    console.log('{ id, data }', { id, data })
+
+    if (req.file) {
+      data.image = req.file
+    }
+
     return await Model.update({ id, data })
   } catch (error) {
     throw error
