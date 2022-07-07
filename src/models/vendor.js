@@ -9,6 +9,11 @@ const Vendor = postgresSequelize.define('vendor', {
     unique: 'compositeIndex',
     primaryKey: true,
   },
+  group_id: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    foreignKey: true,
+  },
 })
 
 Vendor.hasMany(Product)
