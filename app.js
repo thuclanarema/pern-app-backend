@@ -10,7 +10,7 @@ const bodyParser = require('body-parser')
 
 const indexRouter = require('./src/routes/index')
 const usersRouter = require('./src/routes/user')
-const productRouter = require('./src/routes/product')
+const productsRouter = require('./src/routes/product')
 
 const uploadRouter = require('./src/routes/upload')
 const { use } = require('./src/routes/index')
@@ -39,7 +39,7 @@ app.use(urlencodedParser)
 
 app.use('/', indexRouter)
 app.use('/api/users', usersRouter)
-app.use('/api/products', productRouter)
+app.use('/api/products', productsRouter)
 app.use('/api/upload', uploadRouter)
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

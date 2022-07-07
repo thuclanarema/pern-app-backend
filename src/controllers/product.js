@@ -4,6 +4,8 @@ const Service = require('./../services/product')
 const find = async (req, res) => {
   try {
     const data = await Service.find(req)
+
+    console.log(data)
     return ResponseHandler.success(res, data)
   } catch (error) {
     console.log(error)
@@ -23,6 +25,7 @@ const findById = async (req, res) => {
 
 const create = async (req, res) => {
   try {
+    // console.log('req.body', req.body)
     const data = await Service.create(req)
     return ResponseHandler.success(res, data)
   } catch (error) {

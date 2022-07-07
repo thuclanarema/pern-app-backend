@@ -1,4 +1,5 @@
 const Model = require('./../models/product')
+const cloudinary = require('./../models/cloudinary')
 
 const find = async (req) => {
   try {
@@ -22,11 +23,33 @@ const findById = async (req) => {
 const create = async (req) => {
   try {
     let data = { ...req.body }
+    // console.log('req.files', req.files)
 
-    // avatar if any
-    if (req.file) {
-      data.image = req.file
+    console.log('req.files :>> ', req.files)
+
+    // upload to cloudinary
+
+    if (req.files.thumbnail) {
+      // upload thumbnail
+      let thumbnail = await cloudinary.uploadSingle(req.files.thumbnail[0].path)
+      data.image = thumbnail.url
+      console.log('thumbnail', thumbnail)
     }
+
+    if (req.files.photos) {
+      // upload photos
+      let photos = []
+      for (let i = 0; i < req.files.photos.length; i++) {
+        let photo = await cloudinary.uploadSingle(req.files.photos[i].path)
+        photos.push(photo)
+      }
+      data.image = photos.map((photo) => {
+        return photo.url
+      })
+      console.log('photos', photos)
+    }
+
+    // return { ok: true }
 
     return await Model.create(data)
   } catch (error) {
@@ -39,8 +62,28 @@ const update = async (req) => {
     const { id } = req.params
     const data = { ...req.body }
 
-    if (req.file) {
-      data.image = req.file
+    console.log('req.files :>> ', req.files)
+
+    // upload to cloudinary
+
+    if (req.files.thumbnail) {
+      // upload thumbnail
+      let thumbnail = await cloudinary.uploadSingle(req.files.thumbnail[0].path)
+      data.image = thumbnail.url
+      console.log('thumbnail', thumbnail)
+    }
+
+    if (req.files.photos) {
+      // upload photos
+      let photos = []
+      for (let i = 0; i < req.files.photos.length; i++) {
+        let photo = await cloudinary.uploadSingle(req.files.photos[i].path)
+        photos.push(photo)
+      }
+      data.image = photos.map((photo) => {
+        return photo.url
+      })
+      console.log('photos', photos)
     }
 
     return await Model.update({ id, data })
@@ -58,13 +101,10 @@ const _delete = async (req) => {
   }
 }
 
-const upLoadImage = async (req) => {}
-
 module.exports = {
   find,
   findById,
   create,
   update,
   delete: _delete,
-  upLoadImage,
 }

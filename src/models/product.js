@@ -15,14 +15,8 @@ const Product = postgresSequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    code: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      unique: 'compositeIndex',
-    },
     image: {
       type: DataTypes.JSON,
-      allowNull: false,
     },
     price: {
       type: DataTypes.INTEGER,
@@ -97,6 +91,7 @@ const _delete = async (id) => {
 }
 
 module.exports = {
+  Product,
   find,
   findById,
   create,

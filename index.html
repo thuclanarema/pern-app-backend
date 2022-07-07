@@ -44,8 +44,17 @@
       <p><input type="submit" value="Submit" /></p>
     </form>
 
+    <h2>Create product</h2>
+    <form action="http://localhost:5000/api/products" enctype="multipart/form-data" method="POST">
+      <p><input type="text" name="title" value="david" /></p>
+      <p><input type="number" name="price" value="123" /></p>
+      <p><input type="number" name="amount" value="21" /></p>
+      <p><input type="file" name="thumbnail" accept="image/*" /></p>
+      <p><input type="submit" value="Submit" /></p>
+    </form>
+
     <script>
-      document.querySelector('#email').value = `davidpham-${Date.now()}@gmail.com`
+      document.querySelector('#email').value = `davidpham${Date.now()}@gmail.com`
     </script>
   </body>
 </html>

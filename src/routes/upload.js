@@ -5,6 +5,5 @@ const productController = require('../controllers/upload')
 
 router.post('/single', MulterUpload.single('file'), productController.uploadSingleFile)
 
-router.post('/multiple', MulterUpload.array('files', 10), productController.uploadMultipleFiles)
-
+router.post('/multiple', MulterUpload.array('files', 7), productController.uploadMultipleFiles)
 module.exports = router

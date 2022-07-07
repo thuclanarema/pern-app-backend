@@ -5,40 +5,40 @@ cloudinary.config({
   api_key: '623485233856724',
   api_secret: 'A_BY4KGfZUYXStFIik9OYywZmMs',
 })
-
-var self = (module.exports = {
+module.exports = {
   uploadSingle: (file) => {
     return new Promise((resolve) => {
       cloudinary.uploader
         .upload(file, {
-          // folder: 'uploads',
+          folder: 'uploads',
         })
         .then((result) => {
           if (result) {
-            console.log('result', result)
-            resolve({
-              url: result.url,
-            })
+            const fs = require('fs')
+            fs.unlinkSync(file)
+            resolve(result)
           }
         })
     })
   },
-  uploadMultiple: (file) => {
+  uploadMultiple: (files) => {
     return new Promise((resolve) => {
       cloudinary.uploader
-        .upload(file, {
-          // folder: 'uploads',
+        .upload(files, {
+          folder: 'uploads',
         })
         .then((result) => {
           if (result) {
+            const fs = require('fs')
+            fs.unlinkSync(files)
+            console.log('result', result)
             resolve({
               url: result.url,
               id: result.public_id,
-              thumb1: self.reSizeImage(result.public_id, 200, 200),
-              main: self.reSizeImage(result.public_id, 500, 500),
-              thumb2: self.reSizeImage(result.public_id, 300, 300),
+              thumb1: reSizeImage(result.public_id, 200, 200),
+              main: reSizeImage(result.public_id, 500, 500),
+              thumb2: reSizeImage(result.public_id, 300, 300),
             })
-            // console.log('result', result)
           }
         })
     })
@@ -51,4 +51,4 @@ var self = (module.exports = {
       format: 'jpg',
     })
   },
-})
+}
