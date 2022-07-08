@@ -1,3 +1,4 @@
+const { ABSTRACT } = require('sequelize')
 const { Sequelize, DataTypes } = require('sequelize')
 const postgresSequelize = require('../connector/postgres/index')
 
@@ -16,7 +17,7 @@ const Product = postgresSequelize.define(
       allowNull: false,
     },
     image: {
-      type: DataTypes.JSON,
+      type: DataTypes.ARRAY(DataTypes.STRING),
     },
     price: {
       type: DataTypes.INTEGER,

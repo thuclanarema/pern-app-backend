@@ -31,8 +31,12 @@ const create = async (req) => {
 
     if (req.files.thumbnail) {
       // upload thumbnail
+      let thumbnails = []
       let thumbnail = await cloudinary.uploadSingle(req.files.thumbnail[0].path)
-      data.image = thumbnail.url
+      thumbnails.push(thumbnail)
+      data.image = thumbnails.map((thumbnail) => {
+        return thumbnail.url
+      })
       console.log('thumbnail', thumbnail)
     }
 
@@ -68,8 +72,12 @@ const update = async (req) => {
 
     if (req.files.thumbnail) {
       // upload thumbnail
+      let thumbnails = []
       let thumbnail = await cloudinary.uploadSingle(req.files.thumbnail[0].path)
-      data.image = thumbnail.url
+      thumbnails.push(thumbnail)
+      data.image = thumbnails.map((thumbnail) => {
+        return thumbnail.url
+      })
       console.log('thumbnail', thumbnail)
     }
 
